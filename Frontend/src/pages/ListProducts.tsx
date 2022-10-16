@@ -19,15 +19,18 @@ function ListProducts() {
   };
 
   return (
-    <div className="container justify-content-center">
+    <div className="container">
+      <div className="container mt-3">
+        <h2>รายชื่อสินค้า</h2>
+      </div>
       <div className="row createButton">
         <LinkContainer to="/Create">
-          <Button variant="primary" className="col-2 mt-3">
+          <Button variant="primary" className="col-2 mt-3 text-center">
             Create
           </Button>
         </LinkContainer>
       </div>
-      <div className="col-12 mt-2">
+      <div className="container justify-content-center">
         <div className="card card-body mt-3">
           <Table
             striped
