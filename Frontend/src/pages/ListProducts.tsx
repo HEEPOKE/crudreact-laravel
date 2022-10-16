@@ -24,7 +24,7 @@ function ListProducts() {
         <h2>รายชื่อสินค้า</h2>
       </div>
       <div className="row createButton">
-        <LinkContainer to="/Create">
+        <LinkContainer to="/products/create">
           <Button variant="primary" className="col-2 mt-3 text-center">
             Create
           </Button>

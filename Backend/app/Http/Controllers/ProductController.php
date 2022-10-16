@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+// use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class ProductController extends Controller
 {
@@ -36,6 +40,27 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'name' => 'required',
+            'detail' => 'required',
+            'image' => 'required|image',
+        ]);
+
+        try {
+            $imageName = Str::random() . '.' . $request->image->getClientOriginalExtension();
+            Storage::disk('public')->putFileAs('product/image', $request->image, $imageName);
+
+            Product::create($request->post() + ['image' => $imageName]);
+
+            return response()->json([
+                'message' => 'Product created sucessfully'
+            ]);
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return response()->json([
+                'message' => 'มีปัญหา'
+            ], 500);
+        }
     }
 
     /**
