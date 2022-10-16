@@ -32,7 +32,6 @@ function Create() {
           icon: "success",
           text: data.message,
         });
-
         navigate("/products/show");
       })
       .catch(({ response }) => {

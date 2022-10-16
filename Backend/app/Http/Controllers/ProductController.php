@@ -72,6 +72,9 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         //
+        return response()->json([
+            'product' => $product
+        ]);
     }
 
     /**
@@ -95,6 +98,41 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         //
+        $request->validate([
+            'name' => 'required',
+            'detail' => 'required',
+            'image' => 'nullable',
+        ]);
+
+        try {
+            $product->fill($request->post())->update();
+
+            if ($request->hasfile('image')) {
+                if ($product->image) {
+                    $exists = Storage::disk('public')->exists("public/product_images/{$product->image}");
+                    if ($exists) {
+                        Storage::disk('public')->delete("public/product_images/{$product->image}");
+                    }
+                }
+                $imageName = Str::random() . '.' . $request->image->getClientOriginalExtension();
+                Storage::disk('public')->putFileAs('product_images', $request->image, $imageName);
+                $product->image = $imageName;
+                $product->save();
+
+                return response()->json([
+                    'message' => 'Product update sucessfully'
+                ]);
+            } else {
+                return response()->json([
+                    'message' => 'Product update sucessfully'
+                ]);
+            }
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return response()->json([
+                'message' => 'มีปัญหา'
+            ], 500);
+        }
     }
 
     /**
@@ -106,5 +144,25 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         //
+        try {
+
+            if ($product->image) {
+                $exists = Storage::disk('public')->exists("public/product_images/{$product->image}");
+                if ($exists) {
+                    Storage::disk('public')->delete("public/product_images/{$product->image}");
+                }
+            }
+
+            $product->delete();
+
+            return response()->json([
+                'messsage' => 'product Delete!'
+            ]);
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return response()->json([
+                'message' => 'ลบได้ละ'
+            ], 500);
+        }
     }
 }
