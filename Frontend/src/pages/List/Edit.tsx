@@ -65,7 +65,7 @@ await axios.post(`http://localhost:800/api/products/${id}`, formData).then(({dat
       }
 
     return (
-        <div className="container">
+      <div className="container">
         <div className="row justify-content-center">
           <div className="card">
             <div className="card-body">

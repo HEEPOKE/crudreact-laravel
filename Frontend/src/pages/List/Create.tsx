@@ -55,7 +55,7 @@ function Create() {
 
   return (
 <FormProducts productsList={productsList} setProductsList={setProductsList} />
-<List productsList={productsList} setProductsList={setProductsList} />
+<List productsList={productsList} />
   );
 }
 
