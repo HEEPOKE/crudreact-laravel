@@ -1,12 +1,7 @@
 import React from "react";
-import { connect } from "react-redux";
 
-export const List = (props) => {
+export const List = () => {
   return <div>List</div>;
 };
 
-const mapStateToProps = (state) => ({});
-
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(List);
+export default List;
