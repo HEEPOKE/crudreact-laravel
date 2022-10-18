@@ -1,3 +1,5 @@
+import React from "react";
+
 const Home = () => (
   <div className="showcase text-center">
     <h1>HOME</h1>
